@@ -20,27 +20,29 @@ function Board() {
   const [xIsNext, setxIsNext] = useState(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const winner = whoIsTheWinner(squares);
- 
+  const [audio] = useState( new Audio(myMusic));
+  const [currentTimeMusic, setCurrentTimeMusic] = useState(0);
 
 
   let status = winner ? 'Winner: ' + winner : isItTie() ? "It's a Tie!" :'Next player: ' + (xIsNext ? 'X' : 'O');
 
   useEffect(() => {
-    const audio = new Audio(myMusic);
- 
+
     if (isMusicPlaying) {
+      audio.currentTime = currentTimeMusic;
       audio.play();
+
     } else {
+     // currentTimeMusic =  audio.currentTime ;
+     setCurrentTimeMusic(audio.currentTime );
       audio.pause();
     }
-    return () => {
-      audio.pause();
-      audio.currentTime = 0;
-    }
+   
   }, [isMusicPlaying]);
 
 
 const handlerMusic = ()=>{
+
   setIsMusicPlaying(!isMusicPlaying);
 };
 const handleClick = i =>{
