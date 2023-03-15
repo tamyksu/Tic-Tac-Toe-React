@@ -1,6 +1,7 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  background-color: rgb(187, 227, 252);
 }
 
 ol, ul {
@@ -14,26 +15,33 @@ ol, ul {
 }
 
 .status {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+
 }
 
 .square {
   background: #e9b0b0;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
+  font-size: 60px;
   font-weight: bold;
   line-height: 34px;
-  height: 34px;
+  height: 150px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 150px;
+  
+  
 }
 
 .square:focus {
   outline: none;
+ 
 }
 
 .kbd-navigation .square:focus {
@@ -43,8 +51,23 @@ ol, ul {
 .game {
   display: flex;
   flex-direction: row;
+
 }
 
 .game-info {
   margin-left: 20px;
+ 
 }
+
+ button{
+  font-weight: bold;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  margin-right: 5px;
+ margin-top: 10px;
+ background-color: rgb(212, 179, 242);
+ }
+
+ button.musicButton {
+  margin-left: 250px;
+ }
