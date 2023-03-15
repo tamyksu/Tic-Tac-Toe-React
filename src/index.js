@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import myMusic from './music1.mp3';
 
 function Square(props){
     return (
@@ -17,11 +18,31 @@ function Board() {
 
   const [squares,setSquare] = useState(Array(9).fill(null));
   const [xIsNext, setxIsNext] = useState(true);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const winner = whoIsTheWinner(squares);
+ 
+
 
   let status = winner ? 'Winner: ' + winner : isItTie() ? "It's a Tie!" :'Next player: ' + (xIsNext ? 'X' : 'O');
 
+  useEffect(() => {
+    const audio = new Audio(myMusic);
+ 
+    if (isMusicPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }, [isMusicPlaying]);
 
+
+const handlerMusic = ()=>{
+  setIsMusicPlaying(!isMusicPlaying);
+};
 const handleClick = i =>{
   const nerSquares = squares.slice();
   if(winner||nerSquares[i])
@@ -38,6 +59,8 @@ const handlerNewGame =()=>{
   setSquare(newSquares);
   setxIsNext(true);
 };
+
+
 function isItTie(){
   for(let i=0; i<squares.length;i++)
   {
@@ -72,6 +95,7 @@ return true;
           {renderSquare(8)}
         </div>
        <button onClick= {handlerNewGame}>NEW GAME</button>
+       <button onClick={handlerMusic}>{isMusicPlaying ? "Turn OFF" : "Turn ON"}</button>
       </div>
     );
   }
