@@ -22,6 +22,19 @@ function Board() {
   const winner = whoIsTheWinner(squares);
   const [audio] = useState( new Audio(myMusic));
   const [currentTimeMusic, setCurrentTimeMusic] = useState(0);
+  const [timer, setTimer] = useState(30);
+
+  useEffect(()=>{
+    if(timer === 0)//end turn
+    {
+      setxIsNext(!xIsNext);//change to next player
+      setTimer(30);//initilize the timer
+    }
+const interval = setInterval(()=>{
+  setTimer(timer => timer - 1);
+},1000);
+return () => clearInterval(interval);
+  },[timer,xIsNext]);
 
 
   let status = winner ? 'Winner: ' + winner : isItTie() ? "It's a Tie!" :'Next player: ' + (xIsNext ? 'X' : 'O');
@@ -45,6 +58,7 @@ const handlerMusic = ()=>{
 
   setIsMusicPlaying(!isMusicPlaying);
 };
+
 const handleClick = i =>{
   const nerSquares = squares.slice();
   if(winner||nerSquares[i])
@@ -54,12 +68,14 @@ const handleClick = i =>{
   nerSquares[i] = xIsNext?'X':'O';
   setSquare(nerSquares);
   setxIsNext(!xIsNext);
+  setTimer(30);
 };
 
 const handlerNewGame =()=>{
   const newSquares =Array(9).fill(null);
   setSquare(newSquares);
   setxIsNext(true);
+  setTimer(30);
 };
 
 
@@ -99,6 +115,7 @@ return true;
         
        <button onClick= {handlerNewGame}>NEW GAME</button>
        <button className="musicButton" onClick={handlerMusic}>{isMusicPlaying ? "Turn Music OFF" : "Turn Music ON"}</button>
+      <h2>The time left To Player: {timer}</h2>
       </div>
     );
   }
